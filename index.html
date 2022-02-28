@@ -28,8 +28,11 @@
                 <h4 class="text-success">Search Your Mobile Here!</h4>
             </div>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Phone name" aria-label="Phone name">
-                <button class="btn btn-outline-secondary" type="button" id="search-btn">Search</button>
+                <input type="text" class="form-control" placeholder="Phone name" aria-label="Phone name" id="search-field">
+                <button class="btn btn-outline-secondary" onclick="searchPhone()" type="button" id="search-btn">Search</button>
+            </div>
+            <div class="text-center">
+                <p class="text-danger" id="error-msg"></p>
             </div>
         </div>
     </header>
