@@ -135,8 +135,8 @@ const displayPhoneDetails = (phone) => {
     div.innerHTML = 
         `<div class="card mb-3 p-3">
                 <div class="row">
-                <div class="col-md-4 col-4">
-                    <img src="${phone.image}" class="img-fluid rounded-start h-100" alt="...">
+                <div class="col-md-4 col-5">
+                    <img src="${phone.image}" class="img-fluid rounded-start h-75 alt="...">
                 </div>
                 <div class="col-md-8 col-8">
                     <div class="card-body">
@@ -167,10 +167,34 @@ const displayPhoneDetails = (phone) => {
                         </div>
                         <div class="row">
                             <div class="col-md-5">
-                                <p class="card-title">Features</p>
+                                <p class="card-title">Storage</p>
                             </div>
                             <div class="col-md-7">
                                  <p class="card-title">${phone.mainFeatures.storage}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <p class="card-title">Display</p>
+                            </div>
+                            <div class="col-md-7">
+                                 <p class="card-title">${phone.mainFeatures.displaySize}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <p class="card-title">Chipset</p>
+                            </div>
+                            <div class="col-md-7">
+                                 <p class="card-title">${phone.mainFeatures.chipSet}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <p class="card-title">Memory</p>
+                            </div>
+                            <div class="col-md-7">
+                                 <p class="card-title">${phone.mainFeatures.memory}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -179,6 +203,54 @@ const displayPhoneDetails = (phone) => {
                             </div>
                             <div class="col-md-7">
                                  <p class="card-title">${phone.mainFeatures.sensors}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <p class="card-title">Bluetooth</p>
+                            </div>
+                            <div class="col-md-7">
+                                 <p class="card-title">${phone.others.Bluetooth}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <p class="card-title">GPS</p>
+                            </div>
+                            <div class="col-md-7">
+                                 <p class="card-title">${phone.others.GPS}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <p class="card-title">NFC</p>
+                            </div>
+                            <div class="col-md-7">
+                                 <p class="card-title">${phone.others.NFC}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <p class="card-title">Radio</p>
+                            </div>
+                            <div class="col-md-7">
+                                 <p class="card-title">${phone.others.Radio}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <p class="card-title">USB</p>
+                            </div>
+                            <div class="col-md-7">
+                                 <p class="card-title">${phone.others.USB}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <p class="card-title">WLAN</p>
+                            </div>
+                            <div class="col-md-7">
+                                 <p class="card-title">${phone.others.WLAN}</p>
                             </div>
                         </div>
                     </div>
