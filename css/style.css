@@ -1,0 +1,16 @@
+body{
+    font-family: 'Poppins', sans-serif;
+}
+hr{
+    margin: 0;
+}
+#spinner{
+    width: 10px;
+    display: none;
+}
+#error-msg{
+    display: none;
+}
+#result-msg{
+    display: none;
+}

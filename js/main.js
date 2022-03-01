@@ -1,14 +1,17 @@
+// default function
+const displayStyle = (propertyId, propertyStyle) =>  document.getElementById(propertyId).style.display = propertyStyle;
+
 /* ==================================================================
 fetching data based on search and show error if input field is empty
 ==================================================================*/
 const searchPhone = () =>{
     const searchField = document.getElementById('search-field');
-    document.getElementById('spinner').style.display = 'block';
+    displayStyle('spinner','block');
 
     if(searchField.value == ''){
-        document.getElementById('spinner').style.display = 'none';
-        document.getElementById('result-msg').style.display = 'none';
-        document.getElementById('error-msg').style.display = 'block';
+        displayStyle('spinner','none');
+        displayStyle('result-msg','none');
+        displayStyle('error-msg','block');
         document.getElementById('error-msg').innerText = 'Give some input to get result!';
 
         // clear view data when showing error
@@ -16,8 +19,8 @@ const searchPhone = () =>{
         document.getElementById('load-more').textContent = '';
         document.getElementById('phone-details-container').textContent = '';
     }else{
-        document.getElementById('spinner').style.display = 'block';
-        document.getElementById('error-msg').style.display = 'none';
+        displayStyle('spinner','block');
+        displayStyle('error-msg','none');
         document.getElementById('phone-details-container').textContent = '';
 
         const searchValueText = searchField.value;
@@ -39,7 +42,6 @@ function displayResult(phone, phonesContainer){
     // create a div and adding class
     const div = document.createElement('div');
     div.classList.add('col-xl-4', 'col-md-4', 'col-sm-12');
-    
     // showing data 
     div.innerHTML = 
         `<div class="card mb-3 p-3" style="max-width: 540px;">
@@ -63,7 +65,7 @@ function displayResult(phone, phonesContainer){
 
 const displayPhones = (phones) => {
     // spinner display change
-    document.getElementById('spinner').style.display = 'none';
+    displayStyle('spinner','none');
 
     const phonesContainer = document.getElementById('phones-container');
     const loadContainer = document.getElementById('load-more');
@@ -72,9 +74,9 @@ const displayPhones = (phones) => {
 
     if(phones.length < 1){
         // check is there any data based on search if no then show error
-        document.getElementById('result-msg').style.display = 'block';
+        displayStyle('result-msg','block');
+        displayStyle('error-msg','block');
         document.getElementById('result-msg').innerHTML = `<p class="text-primary">Total result: ${phones.length}</p>`;
-        document.getElementById('error-msg').style.display = 'block';
         document.getElementById('error-msg').innerText = 'No data found based on your search';
     }else{
         // showing only 20 result with load more option
@@ -259,7 +261,7 @@ const displayPhoneDetails = (phone) => {
 /* ==========================
 Show more functionality 
 ============================*/
-const showAll = (brand) =>{
+const showAll = (brand) => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${brand}`;
     
     fetch(url)
@@ -269,14 +271,14 @@ const showAll = (brand) =>{
 
 const displayAllPhones = (phones) => {
     // spinner display change
-    document.getElementById('spinner').style.display = 'none';
+    displayStyle('spinner','none');
 
     const phonesContainer = document.getElementById('phones-container');
     const loadContainer = document.getElementById('load-more');
     phonesContainer.textContent = '';
     loadContainer.textContent = '';
 
-    document.getElementById('error-msg').style.display = 'none';
+    displayStyle('error-msg','none');
     document.getElementById('result-msg').innerHTML = `<p class="text-primary">Total result: ${phones.length}, Showing result: ${phones.length}</p>`;
 
     // showing data
