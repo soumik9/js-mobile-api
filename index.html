@@ -23,42 +23,63 @@
             width: 10px;
             display: none;
         }
+        #error-msg{
+            display: none;
+        }
+        #result-msg{
+            display: none;
+        }
     </style>
 
     <title>Mission2022-sixth-assignment</title>
 </head>
 <body>
     <header>
-        <div class="search-box w-75 mx-auto pt-4">
-            <div class="header-title text-center mb-3">
-                <h2 class="fw-bolder">Mobil<i>e</i> <i>T</i>echnology Shop</h2>
-                <h4 class="text-success">Search Your Mobile Here!</h4>
-            </div>
-            <div class="input-group mb-3 w-75 mx-auto">
-                <input type="text" class="form-control" placeholder="Phone name" aria-label="Phone name" id="search-field">
-                <button class="btn btn-outline-secondary" onclick="searchPhone()" type="button" id="search-btn">Search</button>
-            </div>
-
-            <div id="spinner" class="mx-auto">
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
+        <div class="row justify-content-center mt-4 g-0">
+            <div class="col-xl-6 col-md-6 col-10">
+                <!-- header titles and search box start -->
+                <div class="header-title text-center mb-3">
+                    <h2 class="fw-bolder">Mobil<i>e</i> <i>T</i>echnology Shop</h2>
+                    <h4 class="text-success">Search Your Mobile Here!</h4>
                 </div>
-            </div>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Phone name" id="search-field">
+                    <button class="btn btn-outline-secondary" onclick="searchPhone()" type="button" id="search-btn">Search</button>
+                </div>
+                 <!-- header titles and search box end -->
 
-            <div class="row justify-content-center" id="phone-details-container">
+                <!-- spinner -->
+                <div id="spinner" class="mx-auto">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <!-- spinner -->
 
-            </div>
-
-            <div class="text-center">
-                <p class="text-danger" id="error-msg"></p>
-            </div>
-            <div class="text-center" id="result-msg">
-                
+                <!-- error messages -->
+                <div class="text-center">
+                    <p class="text-danger" id="error-msg"></p>
+                </div>
+                <div class="text-center" id="result-msg">
+                    
+                </div>
+                <!-- error messages -->
             </div>
         </div>
     </header>
 
-    <main class="mt-5">
+    <main class="mt-md-4 mt-2">
+        <!-- specific phone details -->
+        <section>
+            <div class="container">
+                <div class="row justify-content-center" id="phone-details-container">
+
+                </div>
+            </div>
+        </section>
+        <!-- specific phone details -->
+
+        <!-- all phones -->
         <section class="all-phones">
             <div class="container">
                 <div class="row" id="phones-container">
@@ -71,9 +92,9 @@
                 </div>
             </div>
         </section>
+        <!-- all phones -->
     </main>
     
-
     <!-- Bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="js/main.js"></script>
