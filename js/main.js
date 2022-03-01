@@ -1,8 +1,12 @@
-// fetching data based on search and show error if input field is empty
+/* ==================================================================
+fetching data based on search and show error if input field is empty
+==================================================================*/
 const searchPhone = () =>{
     const searchField = document.getElementById('search-field');
+    document.getElementById('spinner').style.display = 'block';
 
     if(searchField.value == ''){
+        document.getElementById('spinner').style.display = 'none';
         document.getElementById('result-msg').style.display = 'none';
         document.getElementById('error-msg').style.display = 'block';
         document.getElementById('error-msg').innerText = 'Kichu toh likho naile khelbona 😿';
@@ -12,21 +16,12 @@ const searchPhone = () =>{
         document.getElementById('load-more').textContent = '';
         document.getElementById('phone-details-container').textContent = '';
     }else{
+        document.getElementById('spinner').style.display = 'block';
         document.getElementById('error-msg').style.display = 'none';
         document.getElementById('phone-details-container').textContent = '';
 
         const searchValueText = searchField.value;
         searchField.value = '';
-
-        //console.log(searchValueText);
-
-        /* 
-            Huawei
-            Samsung
-            Oppo
-            Apple
-            Iphone
-        */
         
         // feting data from api based on search field
         const url = `https://openapi.programming-hero.com/api/phones?search=${searchValueText}`;
@@ -37,6 +32,9 @@ const searchPhone = () =>{
     }
 }
 
+/* ==========================
+display phone data on website
+============================*/
 function displayResult(phone, phonesContainer){
     // create a div and adding class
     const div = document.createElement('div');
@@ -55,60 +53,50 @@ function displayResult(phone, phonesContainer){
                         <h5 class="card-title">${phone.phone_name}</h5>
                         <button class="btn btn-primary mt-2" onclick="loadPhoneDetails('${phone.slug}')">Details</button>
                     </div>
-                   
+                
                 </div>
             </div>
         </div>`;
     // appending data
     phonesContainer.appendChild(div);
 }
-
-// display phone data on website
 const displayPhones = (phones) => {
+    // spinner display change
+    document.getElementById('spinner').style.display = 'none';
 
     const phonesContainer = document.getElementById('phones-container');
     const loadContainer = document.getElementById('load-more');
     phonesContainer.textContent = '';
     loadContainer.textContent = '';
 
-    // showing in ui how many result we get
-    const lengthArr = phones.length
-    console.log(phones);
-
-    if(lengthArr < 1){
+    if(phones.length < 1){
         // check is there any data based on search if no then show error
-        document.getElementById('result-msg').innerHTML = `<p class="text-primary">Total result: ${lengthArr} 🤖</p>`;
+        document.getElementById('result-msg').innerHTML = `<p class="text-primary">Total result: ${phones.length} 🤖</p>`;
         document.getElementById('error-msg').style.display = 'block';
         document.getElementById('error-msg').innerText = 'Tumi ja likhso tar sathe miliye kicchu pawa jaini 😿';
-    }else if(lengthArr > 19){
+    }else{
         // showing only 20 result with load more option
         const limitPhones = phones.slice(0, 20);
-        document.getElementById('result-msg').innerHTML = `<p class="text-primary">Total result: ${lengthArr}, Showing result: ${limitPhones.length} 🤖</p>`;
+        document.getElementById('result-msg').innerHTML = `<p class="text-primary">Total result: ${phones.length}, Showing result: ${limitPhones.length ? limitPhones.length : phones.length} 🤖</p>`;
 
-        // showing data
         limitPhones.forEach(phone => {
             displayResult(phone, phonesContainer);
         });
 
         // create a div and adding class 
-        const loadDiv = document.createElement('div');
-        loadDiv.classList.add('col-md-2', 'py-4')
-        loadDiv.innerHTML = `<button onclick="${phones.slice(0, 25)}" class="btn btn-primary">Show more</button>`;
-        loadContainer.appendChild(loadDiv);
-        
-    }else{
-        document.getElementById('error-msg').style.display = 'none';
-        document.getElementById('result-msg').innerHTML = `<p class="text-primary">Total result: ${lengthArr}, Showing result: ${lengthArr} 🤖</p>`;
-
-        // showing data
-        phones.forEach(phone => {
-            displayResult(phone, phonesContainer);
-        });
+        if(phones.length > 19){
+            const loadDiv = document.createElement('div');
+            loadDiv.classList.add('col-md-2', 'py-4')
+            loadDiv.innerHTML = `<button onclick="showAll('${phones[0].brand}')" class="btn btn-primary">Show more</button>`;
+            loadContainer.appendChild(loadDiv);
+        }
     }
 }
 
+/* ==========================
+load specific phone details 
+============================*/
 const loadPhoneDetails = (slug) => {
-    //console.log(slug);
     const url = `https://openapi.programming-hero.com/api/phone/${slug}`;
     fetch(url)
     .then(res => res.json())
@@ -116,20 +104,12 @@ const loadPhoneDetails = (slug) => {
 }
 
 const displayPhoneDetails = (phone) => {
-    console.log(phone);
-
     const phoneDetailsContainer = document.getElementById('phone-details-container');
     phoneDetailsContainer.textContent = '';
 
     // create a div and adding class
     const div = document.createElement('div');
     div.classList.add('col-xl-12', 'col-md-12', 'col-sm-12');
-
-    if(phone.releaseDate){
-        releaseDate = phone.releaseDate;
-    }else{
-        releaseDate = 'No release date is found';
-    }
 
     // showing data 
     div.innerHTML = 
@@ -162,15 +142,20 @@ const displayPhoneDetails = (phone) => {
                                 <p class="card-title">Relase Date</p>
                             </div>
                             <div class="col-md-7">
-                                 <p class="card-title">${releaseDate}</p>
+                                 <p class="card-title">${phone.releaseDate ? phone.releaseDate : 'No release date is found'}</p>
                             </div>
                         </div>
+                        <hr>
+                        <div class="text-center my-1">
+                            <h4>Main features</h4>
+                        </div>
+                        <hr class="mb-1">
                         <div class="row">
                             <div class="col-md-5">
                                 <p class="card-title">Storage</p>
                             </div>
                             <div class="col-md-7">
-                                 <p class="card-title">${phone.mainFeatures.storage}</p>
+                                 <p class="card-title">${phone.mainFeatures.storage ? phone.mainFeatures.storage : 'No storage data found'}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -178,7 +163,7 @@ const displayPhoneDetails = (phone) => {
                                 <p class="card-title">Display</p>
                             </div>
                             <div class="col-md-7">
-                                 <p class="card-title">${phone.mainFeatures.displaySize}</p>
+                                 <p class="card-title">${phone.mainFeatures.displaySize ? phone.mainFeatures.displaySize : 'No display data found'}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -186,7 +171,7 @@ const displayPhoneDetails = (phone) => {
                                 <p class="card-title">Chipset</p>
                             </div>
                             <div class="col-md-7">
-                                 <p class="card-title">${phone.mainFeatures.chipSet}</p>
+                                 <p class="card-title">${phone.mainFeatures.chipSet ? phone.mainFeatures.chipSet : 'No chipSet data found'}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -194,7 +179,7 @@ const displayPhoneDetails = (phone) => {
                                 <p class="card-title">Memory</p>
                             </div>
                             <div class="col-md-7">
-                                 <p class="card-title">${phone.mainFeatures.memory}</p>
+                                 <p class="card-title">${phone.mainFeatures.memory ? phone.mainFeatures.memory : 'No memory data found'}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -202,15 +187,20 @@ const displayPhoneDetails = (phone) => {
                                 <p class="card-title">Sensors</p>
                             </div>
                             <div class="col-md-7">
-                                 <p class="card-title">${phone.mainFeatures.sensors}</p>
+                                 <p class="card-title">${phone.mainFeatures.sensors.map(el => el).join(', ')}</p>
                             </div>
                         </div>
+                        <hr>
+                        <div class="text-center my-1">
+                            <h4>Others</h4>
+                        </div>
+                        <hr class="mb-1">
                         <div class="row">
                             <div class="col-md-5">
                                 <p class="card-title">Bluetooth</p>
                             </div>
                             <div class="col-md-7">
-                                 <p class="card-title">${phone.others.Bluetooth}</p>
+                                 <p class="card-title">${phone.others.Bluetooth ? phone.others.Bluetooth : 'No bluetooth data found'}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -218,7 +208,7 @@ const displayPhoneDetails = (phone) => {
                                 <p class="card-title">GPS</p>
                             </div>
                             <div class="col-md-7">
-                                 <p class="card-title">${phone.others.GPS}</p>
+                                 <p class="card-title">${phone.others.GPS ? phone.others.GPS : 'No GPS data found'}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -226,7 +216,7 @@ const displayPhoneDetails = (phone) => {
                                 <p class="card-title">NFC</p>
                             </div>
                             <div class="col-md-7">
-                                 <p class="card-title">${phone.others.NFC}</p>
+                                 <p class="card-title">${phone.others.NFC ? phone.others.NFC : 'No NFC data found'}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -234,7 +224,7 @@ const displayPhoneDetails = (phone) => {
                                 <p class="card-title">Radio</p>
                             </div>
                             <div class="col-md-7">
-                                 <p class="card-title">${phone.others.Radio}</p>
+                                 <p class="card-title">${phone.others.Radio ? phone.others.Radio : 'No Radio data found'}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -242,7 +232,7 @@ const displayPhoneDetails = (phone) => {
                                 <p class="card-title">USB</p>
                             </div>
                             <div class="col-md-7">
-                                 <p class="card-title">${phone.others.USB}</p>
+                                 <p class="card-title">${phone.others.USB ? phone.others.USB : 'No USB data found'}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -250,7 +240,7 @@ const displayPhoneDetails = (phone) => {
                                 <p class="card-title">WLAN</p>
                             </div>
                             <div class="col-md-7">
-                                 <p class="card-title">${phone.others.WLAN}</p>
+                                 <p class="card-title">${phone.others.WLAN ? phone.others.WLAN : 'No WLAN data found'}</p>
                             </div>
                         </div>
                     </div>
@@ -261,6 +251,31 @@ const displayPhoneDetails = (phone) => {
     phoneDetailsContainer.appendChild(div);
 }
 
-// const showMore = (phones) =>{
-//     console.log(phones);
-// }
+/* ==========================
+Show more functionality 
+============================*/
+const showAll = (brand) =>{
+    const url = `https://openapi.programming-hero.com/api/phones?search=${brand}`;
+    
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displayAllPhones(data.data));
+}
+
+const displayAllPhones = (phones) => {
+    // spinner display change
+    document.getElementById('spinner').style.display = 'none';
+
+    const phonesContainer = document.getElementById('phones-container');
+    const loadContainer = document.getElementById('load-more');
+    phonesContainer.textContent = '';
+    loadContainer.textContent = '';
+
+    document.getElementById('error-msg').style.display = 'none';
+    document.getElementById('result-msg').innerHTML = `<p class="text-primary">Total result: ${phones.length}, Showing result: ${phones.length} 🤖</p>`;
+
+    // showing data
+    phones.forEach(phone => {
+        displayResult(phone, phonesContainer);
+    });
+}

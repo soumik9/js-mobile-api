@@ -16,6 +16,13 @@
         body{
             font-family: 'Poppins', sans-serif;
         }
+        hr{
+            margin: 0;
+        }
+        #spinner{
+            width: 10px;
+            display: none;
+        }
     </style>
 
     <title>Mission2022-sixth-assignment</title>
@@ -30,6 +37,12 @@
             <div class="input-group mb-3 w-75 mx-auto">
                 <input type="text" class="form-control" placeholder="Phone name" aria-label="Phone name" id="search-field">
                 <button class="btn btn-outline-secondary" onclick="searchPhone()" type="button" id="search-btn">Search</button>
+            </div>
+
+            <div id="spinner" class="mx-auto">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
 
             <div class="row justify-content-center" id="phone-details-container">
